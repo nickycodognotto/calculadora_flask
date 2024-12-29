@@ -9,15 +9,19 @@ def index():
         numero1 = float(request.form['numero1'])
         numero2 = float(request.form['numero2'])
         operacao = request.form['operacao']
-        
-        if operacao == 'adicao':
-            resultado = numero1 + numero2
-        elif operacao == 'subtracao':
-            resultado = numero1 - numero2
-        elif operacao == 'multiplicacao':
-            resultado = numero1 * numero2
-        elif operacao == 'divisao':
-            resultado = numero1 / numero2
+
+        operacoes = {
+            'adicao': lambda x,y: x + y,
+            'subtracao': lambda x,y: x - y,
+            'multiplicacao': lambda x,y: x * y,
+            'divisao': lambda x,y: x / y
+
+        }
+
+        if operacao in operacoes:
+            resultado = operacoes[operacao](numero1, numero2)
+        else:
+            resultado = "Operação inválida"
 
     return render_template('index.html', resultado=resultado)
 
